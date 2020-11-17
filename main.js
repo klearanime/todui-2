@@ -1,5 +1,6 @@
+const { strict } = require('assert');
 const readline = require('readline');
-
+const data = require('./data.js')
 
 const interface = readline.createInterface({
   input: process.stdin,
@@ -18,8 +19,30 @@ Your options are:
 
 `;
 
+const todos = data.todos
+
+const toList = function(item) {
+  todos.push({
+    text: '',
+    priority: 2,
+    isComplete: false,
+  })
+}  
+
+const todoList = function(todo) {
+  console.log('Here are your todos:')
+    for (const todo of todos) {
+      console.log('* ' + todo.text + ' ' + todo.isComplete + ' ' + todo.priority)
+  }
+}
+todoList()
+
 const handleMenu = function(cmd) {
-  if (cmd === '6') {
+  if(cmd === '1' || cmd === '2' || cmd === '3' || cmd === '4' || cmd === '5') {
+    console.clear()
+    interface.question('What should go on your list?\n', toList)
+  }
+  else if (cmd === '6') {
     console.log('Quitting!')
     interface.close();
   } else {
@@ -29,5 +52,6 @@ const handleMenu = function(cmd) {
   }
 };
 
-console.clear();
-interface.question(menu, handleMenu);
+console.clear()
+todoList()
+interface.question(menu, handleMenu)
